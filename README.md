@@ -39,15 +39,6 @@ PRIMARY KEY(price_id))
 AUTO_INCREMENT=1
 ENGINE=InnoDB;
 
-CREATE TABLE security_has_price(
-security_price_id  INT UNSIGNED NOT NULL AUTO_INCREMENT,
-price_id INT UNSIGNED NOT NULL AUTO_INCREMENT,
-company_id INT UNSIGNED NOT NULL AUTO_INCREMENT,
-PRIMARY KEY(security_price_id),
-FOREIGN KEY(price_id) REFERENCES price(price_id) ON DELETE CASCADE,
-FOREIGN KEY(company_id) REFERENCES security(price_id) ON DELETE CASCADE)
-AUTO_INCREMENT=1
-ENGINE=InoDB;
 
 
 CREATE TABLE security(
@@ -62,6 +53,21 @@ FOREIGN KEY(company_id) REFERENCES company(company_id) ON DELETE CASCADE,
 FOREIGN KEY(exchange_id) REFERENCES exchange(exchange_id) ON DELETE NO ACTION)
 AUTO_INCREMENT=1
 ENGINE=InnoDB;
+
+
+
+CREATE TABLE security_has_price(
+security_price_id  INT UNSIGNED NOT NULL AUTO_INCREMENT,
+price_id INT UNSIGNED NOT NULL ,
+company_id INT UNSIGNED NOT NULL,
+PRIMARY KEY(security_price_id),
+FOREIGN KEY(price_id) 
+REFERENCES price(price_id) ON DELETE CASCADE,
+FOREIGN KEY(company_id) REFERENCES security(company_id) ON DELETE CASCADE)
+AUTO_INCREMENT=1
+ENGINE=InnoDB;
+
+
 
 CREATE TABLE financial_line(
 line_id INT UNSIGNED NOT NULL AUTO_INCREMENT,
@@ -88,6 +94,20 @@ FOREIGN KEY(type_id) REFERENCES financial_type(type_id) ON DELETE CASCADE)
 AUTO_INCREMENT=1
 ENGINE=InnoDB;
 
+CREATE TABLE statement_fact(
+fact_id INT UNSIGNED NOT NULL AUTO_INCREMENT,
+line_id INT UNSIGNED NOT NULL,
+fiscal_year INT(4) NOT NULL,
+fiscal_month INT(2) NOT NULL,
+currency VARCHAR(5) NOT NULL,
+unit VARCHAR(10) NOT NULL,
+value DOUBLE NOT NULL,
+PRIMARY KEY(fact_id),
+FOREIGN KEY(line_id) REFERENCES financial_line(line_id) ON UPDATE CASCADE)
+AUTO_INCREMENT=1
+ENGINE=InnoDB;
+
+
 
 CREATE TABLE company_has_statement(
 company_statement_id INT UNSIGNED NOT NULL AUTO_INCREMENT,
@@ -100,18 +120,7 @@ AUTO_INCREMENT=1
 ENGINE=InnoDB;
 
 
-CREATE TABLE satement_fact(
-fact_id INT UNSIGNED NOT NULL AUTO_INCREMENT,
-line_id INT UNSIGNED NOT NULL,
-fiscal_year INT(4) NOT NULL,
-fiscal_month INT(2) NOT NULL,
-currency VARCHAR(5) NOT NULL,
-unit VARCHAR(10) NOT NULL,
-value DOUBLE NOT NULL,
-PRIMARY KEY(fact_id),
-FOREIGN KEY(line_id) REFERENCES financial_line(line_id) ON UPDATE CASCADE)
-AUTO_INCREMENT=1
-ENGINE=InnoDB;
+
 
 
 
