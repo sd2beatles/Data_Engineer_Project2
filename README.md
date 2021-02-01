@@ -49,39 +49,28 @@ open DOUBLE NOT NULL,
 high DOUBLE NOT NULL,
 low DOUBLE NOT NULL,
 close DOUBLE NOT NULL,
-volumne INT UNSIGNED NOT NULL,
+volume INT UNSIGNED NOT NULL,
+adjusted DOUBLE NOT NULL,
+dividend DOUBLE NOT NULL,
 PRIMARY KEY(price_id),
 FOREIGN KEY(company_id) REFERENCES security(company_id)) 
 AUTO_INCREMENT=1
 ENGINE=InnoDB;
 
 
-
-
-
-
-CREATE TABLE financial_line(
-line_id INT UNSIGNED NOT NULL AUTO_INCREMENT,
-line_name VARCHAR(50) NOT NULL,
-PRIMARY KEY(line_id))
-AUTO_INCREMENT=1
-ENGINE=InnoDB;
-
-CREATE TABLE financial_type(
+CREATE TABLE statement_type(
 type_id INT UNSIGNED NOT NULL AUTO_INCREMENT,
 type_name VARCHAR(50) NOT NULL,
 PRIMARY KEY(type_id))
 AUTO_INCREMENT=1
 ENGINE=InnoDB;
 
-
-CREATE TABLE statment_info(
-info_id INT UNSIGNED NOT NULL AUTO_INCREMENT,
-line_id INT UNSIGNED NOT NULL,
+CREATE TABLE statement_line(
+line_id INT UNSIGNED NOT NULL AUTO_INCREMENT,
 type_id INT UNSIGNED NOT NULL,
-PRIMARY KEY(info_id),
-FOREIGN KEY(line_id) REFERENCES financial_line(line_id) ON DELETE CASCADE,
-FOREIGN KEY(type_id) REFERENCES financial_type(type_id) ON DELETE CASCADE)
+line_name VARCHAR(100) NOT NULL,
+PRIMARY KEY(line_id),
+FOREIGN KEY(type_id) REFERENCES statement_type(type_id) ON DELETE SET NULL)
 AUTO_INCREMENT=1
 ENGINE=InnoDB;
 
@@ -94,17 +83,17 @@ currency VARCHAR(5) NOT NULL,
 unit VARCHAR(10) NOT NULL,
 value DOUBLE NOT NULL,
 PRIMARY KEY(fact_id),
-FOREIGN KEY(line_id) REFERENCES financial_line(line_id) ON UPDATE CASCADE)
+FOREIGN KEY(line_id) REFERENCES financial_line(line_id) ON DELETE SET NULL)
 AUTO_INCREMENT=1
 ENGINE=InnoDB;
 
 
 
-CREATE TABLE company_has_statement(
-company_statement_id INT UNSIGNED NOT NULL AUTO_INCREMENT,
-company_id INT UNSIGNED NOT NULL,
-fact_id INT UNSIGNED NOT NULL,
-PRIMARY KEY(company_statement_id),
+CREATE TABLE security_has_statement(
+shs_id UNSIGNED INT NOT NULL AUTO_INCREMENT,
+company_id UNSIGNED INT NOT NULL,
+fact_id UNSIGNED INT NOT NULL,
+PRIMARY KEY(shs_id),
 FOREIGN KEY(company_id) REFERENCES security(company_id) ON DELETE CASCADE,
 FOREIGN KEY(fact_id) REFERENCES statement_fact(fact_id) ON DELETE CASCADE)
 AUTO_INCREMENT=1
