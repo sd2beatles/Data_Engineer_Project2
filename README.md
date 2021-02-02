@@ -93,8 +93,10 @@ CREATE TABLE security_has_statement(
 shs_id INT UNSIGNED NOT NULL AUTO_INCREMENT,
 company_id INT UNSIGNED NOT NULL,
 fact_id INT UNSIGNED NOT NULL,
+line_id INT UNSIGNED NOT NULL,
 PRIMARY KEY(shs_id),
 FOREIGN KEY(company_id) REFERENCES security(company_id) ON DELETE CASCADE,
+FOREIGN KEY(fact_id) REFERENCES statement_fact(fact_id) ON DELETE CASCADE,
 FOREIGN KEY(fact_id) REFERENCES statement_fact(fact_id) ON DELETE CASCADE)
 AUTO_INCREMENT=1
 ENGINE=InnoDB;
