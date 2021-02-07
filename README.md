@@ -58,25 +58,33 @@ AUTO_INCREMENT=1
 ENGINE=InnoDB;
 
 
-CREATE TABLE statement_line(
-line_id INT UNSIGNED NOT NULL AUTO_INCREMENT,
-statement_id INT NOT NULL,
-line_name VARCHAR(100) NOT NULL UNIQUE,
-PRIMARY KEY(line_id),
-FOREIGN KEY(statement_id) REFERENCES statement_type(statement_id))
+CREATE TABLE statement_type(
+statement_id INT UNSIGNED AUTO_INCREMENT,
+statement_name VARCHAR(50) NOT NULL,
+PRIMARY KEY(statement_id))
 AUTO_INCREMENT=1
 ENGINE=InnoDB;
+
+CREATE TABLE statement_line(
+line_id INT UNSIGNED NOT NULL ,
+statement_id INT UNSIGNED NOT NULL ,
+line_name VARCHAR(100) NOT NULL UNIQUE,
+PRIMARY KEY(line_id,statement_id),
+FOREIGN KEY(statement_id) REFERENCES statement_type(statement_id))
+ENGINE=InnoDB;
+
 
 CREATE TABLE statement_fact(
 fact_id INT UNSIGNED NOT NULL AUTO_INCREMENT,
 line_id INT UNSIGNED NOT NULL,
+statement_id INT UNSIGNED NOT NULL,
 fiscal_year INT(4) NOT NULL,
 fiscal_month INT(2) NOT NULL,
 currency VARCHAR(5) NOT NULL,
 unit VARCHAR(10) NOT NULL,
 value DOUBLE NOT NULL,
 PRIMARY KEY(fact_id),
-FOREIGN KEY(line_id) REFERENCES statement_line(line_id) ON DELETE SET NULL)
+FOREIGN KEY(line_id,statement_id) REFERENCES statement_line(line_id,statement_id) ON DELETE CASCADE)
 AUTO_INCREMENT=1
 ENGINE=InnoDB;
 
