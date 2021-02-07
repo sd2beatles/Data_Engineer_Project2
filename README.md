@@ -60,9 +60,10 @@ ENGINE=InnoDB;
 
 CREATE TABLE statement_line(
 line_id INT UNSIGNED NOT NULL AUTO_INCREMENT,
-type_name VARCHAR(50) NOT NULL,
+statement_id INT NOT NULL,
 line_name VARCHAR(100) NOT NULL UNIQUE,
-PRIMARY KEY(line_id))
+PRIMARY KEY(line_id),
+FOREIGN KEY(statement_id) REFERENCES statement_type(statement_id))
 AUTO_INCREMENT=1
 ENGINE=InnoDB;
 
